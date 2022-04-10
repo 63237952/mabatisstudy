@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="example.mapper.IRoleMapper">
+
+    <resultMap id="roleMap" type="example.entity.Role">
+        <id column="id" property="id"></id>
+        <result column="role_name" property="roleName"></result>
+        <result column="role_desc" property="roleDesc"></result>
+        <!--引入的集合-->
+        <collection property="users" ofType="example.entity.User">
+            <!--细节，该id属性与上面的id属性重复，会导致结果出现问题，需要给id起一个别名aid-->
+            <id column="uid" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="address" property="address"></result>
+            <result column="sex" property="sex"></result>
+            <result column="birthday" property="birthday"></result>
+        </collection>
+    </resultMap>
+    <select id="findRoleUser" resultMap="roleMap">
+        SELECT r.*,u.id uid,u.`address`,u.`birthday`,u.`sex`,u.`username` FROM role r LEFT OUTER JOIN role_user ru ON ru.rid=r.id LEFT OUTER JOIN USER AS u ON u.`id`=ru.`uid`
+    </select>
+
+</mapper>

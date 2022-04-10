@@ -3,6 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--注意settings需要放在前面，必须按照规定加载结构顺序放置标签的位置-->
+    <!--
+                configuration（配置）
+                properties（属性）
+                settings（设置）
+                typeAliases（类型别名）
+                typeHandlers（类型处理器）
+                objectFactory（对象工厂）
+                plugins（插件）
+                environments（环境配置）
+                environment（环境变量）
+                transactionManager（事务管理器）
+                dataSource（数据源）
+                databaseIdProvider（数据库厂商标识）
+                mappers（映射器）
+-->
+
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"></setting>
+    </settings>
     <environments default="mysql">
         <environment id="mysql">
             <transactionManager type="JDBC"></transactionManager>
@@ -16,6 +37,10 @@
     </environments>
 
 <mappers>
-    <mapper resource="example/mapper/iusermapper.xml"></mapper>
+    <!--使用resource属性，不需要包目录与接口相同-->
+    <!--<mapper resource="example/mapperss/iusermapper.xml"></mapper>-->
+    <!--需要包路径相同，并且名字和dao接口一致-->
+    <package name="example.mapper"></package>
 </mappers>
+ 
 </configuration>
